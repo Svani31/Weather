@@ -1,13 +1,42 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Paper, Typography } from "@mui/material";
-import { FormEvent, useState } from "react";
+import { FormEvent, useReducer, useState } from "react";
 import "./App.css";
 import { ForecastDayType, Weather } from "./@types/types";
+
+type InitialProps = {
+  exacleValue: ForecastDayType[];
+};
+
+const initialValue: InitialProps = { exacleValue: [] };
+
+enum REDUCER_ACTION_TYPE {
+  ADD__DAY_TYPE,
+}
+
+type Action_type = {
+  type: REDUCER_ACTION_TYPE;
+  addDayType: ForecastDayType;
+};
+
+const reducer = (state = initialValue, action: Action_type) => {
+  switch (action.type) {
+    case REDUCER_ACTION_TYPE.ADD__DAY_TYPE:
+      return { ...state, exacleValue: [action.addDayType] };
+    default:
+      return state;
+  }
+};
 
 function App() {
   const [value, setValue] = useState("");
   const [weather, setWeather] = useState<Weather>();
+  const [openInfo,setOpenInfo] = useState<boolean>(false)
   const key = "5d33bb46f3f04f3e88f130706232806";
+
+  const [state, dispatch] = useReducer(reducer, initialValue);
+
+
 
   const getWeatherHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,9 +50,16 @@ function App() {
     fetchData();
     console.log(weather);
   };
-  
-  const getInformationHandler = (info:ForecastDayType) =>{
-    console.log(info)
+
+  const getInformationHandler = (info: ForecastDayType) => {
+    setOpenInfo(!openInfo)
+    dispatch({type:REDUCER_ACTION_TYPE.ADD__DAY_TYPE,addDayType:info})
+  };
+
+  console.log(state.exacleValue)
+
+  const removeInformationHandler = () =>{
+    setOpenInfo(!openInfo)
   }
 
   return (
@@ -39,6 +75,27 @@ function App() {
       >
         Check Weather
       </h1>
+      {openInfo ? (<Box sx={{position:"absolute",left:"0%",bottom:"12%"}}>
+        <span onClick={()=> removeInformationHandler()} style={{position:"absolute",right:"20px",top:"30px",fontSize:"40px",color:"white"}}>X</span>
+        <Typography sx={{textAlign:"center",color:"white"}} variant="h4">Hourly Weather Condition</Typography>
+          <Paper elevation={16}>
+          {state.exacleValue.map((eachHour) =>{
+            return(
+              <Box sx={{display:"flex",gap:"20px",flexWrap:"wrap",alignItems:"center",justifyContent:"center"}} key={eachHour.date}>
+                {eachHour.hour.map((hour)=>{
+                  return(
+                    <Box sx={{display:"flex",alignItems:"center",flexDirection:"column"}}>
+                      <Typography sx={{color:"white"}} variant="body1">Hour: {hour.time}</Typography>
+                      <img src={hour.condition.icon} alt="" />
+                      <Typography sx={{color:"white"}} variant="body1">Temp: {hour.temp_c}-C</Typography>
+                    </Box>
+                  )
+                })}
+              </Box>
+            )
+          })}
+          </Paper>
+      </Box>): ""}
       <Box
         sx={{
           alignItems: "center",
@@ -82,7 +139,7 @@ function App() {
               <Typography sx={{ color: "white" }} variant="h3">
                 {weather?.location.name}
               </Typography>
-              <img src={weather?.current.condition.icon} alt="Enter Correct Place" />
+              <img src={weather?.current.condition.icon} alt="Loading..." />
               <Typography sx={{ color: "White" }} variant="h6">
                 Current Temperature: {weather?.current.temp_c}
               </Typography>
@@ -94,7 +151,7 @@ function App() {
                 <Paper
                   key={eachDay.date}
                   elevation={16}
-                  onClick={()=> getInformationHandler(eachDay)}
+                  onClick={() => getInformationHandler(eachDay)}
                   sx={{
                     padding: "15px",
                     backgroundColor: "transparent",
@@ -102,7 +159,7 @@ function App() {
                     alignItems: "center",
                     display: "flex",
                     flexDirection: "column",
-                    cursor:"pointer"
+                    cursor: "pointer",
                   }}
                 >
                   <Typography sx={{ color: "white" }} variant="h6">
@@ -110,7 +167,7 @@ function App() {
                   </Typography>
                   <img src={eachDay.day.condition.icon} alt="" />
                   <Box sx={{ display: "flex" }}>
-                    <Typography sx={{color:"white"}} variant="body1">
+                    <Typography sx={{ color: "white" }} variant="body1">
                       MaxTemp: {eachDay.day.maxtemp_c}C | MinTemp:{" "}
                       {eachDay.day.mintemp_c}C
                     </Typography>
