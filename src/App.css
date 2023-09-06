@@ -1,0 +1,14 @@
+*,
+::before,
+::after{
+  background-color: #24252a;
+  margin: 0;
+  padding: 0;
+}
+
+.inputer{
+  border: none;
+  background-color: #36373f;
+  border-radius: 12px;
+  outline: none;
+}
