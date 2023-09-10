@@ -1,27 +1,33 @@
-# React + TypeScript + Vite
+# Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Capture](https://github.com/Svani31/Weather/assets/119888981/513f5d2c-acc8-40af-8ea2-50a2516d9c2a)
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# About
 
-## Expanding the ESLint configuration
+This is a Weather App that allows you to check the weather for different cities. It provides current weather information as well as a 3-day weather forecast and a 3-day future weather forecast using data from an online REST API. The app is built using TypeScript and React, utilizing a state management system with reducers. It also incorporates various small libraries to enhance functionality.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+# Features
+- City Weather: View current weather conditions for a selected city.
+- 3-Day Weather Forecast: Get the weather forecast for the next 3 days.
+- 3-Day Future Weather Forecast: Check the weather forecast for the 3 days following the current date.
+- TypeScript and React: The app is built using TypeScript and React for a robust and efficient user interface.
+- State Management with Reducers: Utilizes reducers for state management to efficiently handle data and UI updates.
+- External API Integration: Fetches weather data from an online REST API to provide up-to-date information.
+- Small Libraries: Incorporates various small libraries to improve app functionality and user experience.
 
-- Configure the top-level `parserOptions` property like this:
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+# Technologies Used 
+- React
+- TypeScript
+- Redux (or your specific reducer implementation)
+- Axios (or your specific API library)
+- Other small libraries
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+# Usage
+- Enter the name of a city in the search bar and press Enter or click the search button.
+- View the current weather conditions for the selected city.
+- Scroll down to see the 3-day weather forecast and 3-day future weather forecast.
+
+# Demo
+- You can see a live demo of the Weather App at [Demo Link](https://weather-zeta-inky.vercel.app/).
