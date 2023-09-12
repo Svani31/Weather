@@ -42,7 +42,7 @@ function App() {
     e.preventDefault();
     const fetchData = async () => {
       const respons = await fetch(
-        `http://api.weatherapi.com/v1/forecast.json?key=${key} &q=${value}&days=5&aqi=no&alerts=no`
+        `https://api.weatherapi.com/v1/forecast.json?key=${key} &q=${value}&days=5&aqi=no&alerts=no`
       );
       const data = await respons.json();
       setWeather(data);
